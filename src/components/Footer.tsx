@@ -88,20 +88,6 @@ export default function Footer() {
               variant="outline"
               px={2}
               py={1}
-              size={"sm"}
-              rounded={"md"}
-              color="gray.200"
-              _hover={{
-                textDecoration: "none",
-                bg: "gray.700",
-              }}
-            >
-              Encontranos
-            </Button>
-            <Button
-              variant="outline"
-              px={2}
-              py={1}
               rounded={"md"}
               size={"sm"}
               color="gray.200"
@@ -111,21 +97,6 @@ export default function Footer() {
               }}
             >
               Gift Card
-            </Button>
-
-            <Button
-              variant="outline"
-              px={2}
-              py={1}
-              size={"sm"}
-              rounded={"md"}
-              color="gray.200"
-              _hover={{
-                textDecoration: "none",
-                bg: "gray.700",
-              }}
-            >
-              FAQs
             </Button>
           </Stack>
           <Stack direction={"row"} spacing={6}>

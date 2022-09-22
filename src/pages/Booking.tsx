@@ -131,6 +131,167 @@ export default function Booking() {
           </Button>
         )}
       </Center>
+
+      {local == "colegiales" &&
+        listasCOLEGIALES.map((sala) => (
+          <Grid
+            ml={5}
+            mr={5}
+            mb={10}
+            templateAreas={`"nav main"`}
+            gridTemplateRows={"50px 1fr"}
+            gridTemplateColumns={"150px 1fr"}
+            h="200px"
+            gap="1"
+            color="blackAlpha.700"
+            fontWeight="bold"
+          >
+            <GridItem pl="2" area={"nav"}>
+              <Image
+                maxH="200px"
+                mr={10}
+                src={"juegos/" + find(sala.at(0)!.productId)!.img}
+              />
+            </GridItem>
+            <GridItem pl="2" area={"main"}>
+              <Carousel cols={6} rows={1} gap={1} loop>
+                {sala.map((slot) => (
+                  <Carousel.Item>
+                    {slot.numSeatsAvailable > 0 && (
+                      <Center
+                        h="200px"
+                        borderRadius={"5px"}
+                        ml={"10px"}
+                        color="white"
+                        bg={"#BDE7BD"}
+                      >
+                        <VStack
+                          divider={<StackDivider borderColor="black" />}
+                          spacing={2}
+                          align="stretch"
+                        >
+                          <Box h="25px">
+                            <Text color="black">
+                              {Moment(slot.startTime).format("HH:mm")}
+                            </Text>
+                          </Box>
+                          <Box h="40px">
+                            <Text color="black"> DISPONIBLE </Text>
+                          </Box>
+                        </VStack>
+                      </Center>
+                    )}
+
+                    {slot.numSeatsAvailable == 0 && (
+                      <Center
+                        h="200px"
+                        borderRadius={"5px"}
+                        ml={"10px"}
+                        color="white"
+                        bg={"#FFB6B3"}
+                      >
+                        <VStack
+                          divider={<StackDivider borderColor="black" />}
+                          spacing={2}
+                          align="stretch"
+                        >
+                          <Box h="25px">
+                            <Text color="black">
+                              {Moment(slot.startTime).format("HH:mm")}
+                            </Text>
+                          </Box>
+                          <Box h="40px">
+                            <Text color="black"> OCUPADO </Text>
+                          </Box>
+                        </VStack>
+                      </Center>
+                    )}
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </GridItem>
+          </Grid>
+        ))}
+      {local == "palermo" &&
+        listasPALERMO.map((sala) => (
+          <Grid
+            ml={5}
+            mr={5}
+            mb={10}
+            templateAreas={`"nav main"`}
+            gridTemplateRows={"50px 1fr"}
+            gridTemplateColumns={"150px 1fr"}
+            h="200px"
+            gap="1"
+            color="blackAlpha.700"
+            fontWeight="bold"
+          >
+            <GridItem pl="2" area={"nav"}>
+              <Image
+                maxH="200px"
+                mr={10}
+                src={"juegos/" + find(sala.at(0)!.productId)!.img}
+              />
+            </GridItem>
+            <GridItem pl="2" area={"main"}>
+              <Carousel cols={6} rows={1} gap={1} loop>
+                {sala.map((slot) => (
+                  <Carousel.Item>
+                    {slot.numSeatsAvailable > 0 && (
+                      <Center
+                        h="200px"
+                        color="white"
+                        bg={"#BDE7BD"}
+                        borderRadius={"5px"}
+                        ml={"10px"}
+                      >
+                        <VStack
+                          divider={<StackDivider borderColor="black" />}
+                          spacing={2}
+                          align="stretch"
+                        >
+                          <Box h="25px">
+                            <Text color="black">
+                              {Moment(slot.startTime).format("HH:mm")}
+                            </Text>
+                          </Box>
+                          <Box h="40px">
+                            <Text color="black"> DISPONIBLE </Text>
+                          </Box>
+                        </VStack>
+                      </Center>
+                    )}
+
+                    {slot.numSeatsAvailable == 0 && (
+                      <Center
+                        borderRadius={"5px"}
+                        ml={"10px"}
+                        h="200px"
+                        color="white"
+                        bg={"#FFB6B3"}
+                      >
+                        <VStack
+                          divider={<StackDivider borderColor="black" />}
+                          spacing={2}
+                          align="stretch"
+                        >
+                          <Box h="25px">
+                            <Text color="black">
+                              {Moment(slot.startTime).format("HH:mm")}
+                            </Text>
+                          </Box>
+                          <Box h="40px">
+                            <Text color="black"> OCUPADO </Text>
+                          </Box>
+                        </VStack>
+                      </Center>
+                    )}
+                  </Carousel.Item>
+                ))}
+              </Carousel>
+            </GridItem>
+          </Grid>
+        ))}
     </LandingLayout>
   );
 }
