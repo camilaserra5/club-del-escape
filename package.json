@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.10",
     "@chakra-ui/react": "^2.3.4",
+    "@chakra-ui/slider": "^2.0.11",
+    "@egjs/react-flicking": "^4.10.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,10 +17,16 @@
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "framer-motion": "^6.5.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "moment": "^2.29.4",
+    "react": "^18.0.20",
+    "react-dom": "^18.0.6",
+    "react-grid-carousel": "^1.0.1",
+    "react-horizontal-scrolling": "^0.1.13",
+    "react-horizontal-scrolling-menu": "^3.2.0",
     "react-icons": "^3.11.0",
+    "react-router-dom": "^6.4.0",
     "react-scripts": "5.0.1",
+    "react-slick": "^0.29.0",
     "typescript": "^4.8.3",
     "web-vitals": "^2.1.4"
   },
@@ -41,5 +50,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-slick": "^0.23.10",
+    "prettier": "2.7.1",
+    "swiper": "^8.4.2",
+    "swiper-react": "1.0.0"
   }
 }
