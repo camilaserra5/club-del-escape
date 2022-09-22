@@ -9,6 +9,7 @@ import {
   HStack,
   Image,
   Circle,
+  SimpleGrid,
   Link,
   Text,
   StackDivider,
@@ -16,14 +17,40 @@ import {
 } from "@chakra-ui/react";
 // @ts-ignore
 import Carousel from "react-grid-carousel";
-
+import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import Moment from "moment";
 import data from "../data/slots.json";
 import holi from "../data/data.json";
 import { AiFillStar, IoMdInformationCircleOutline } from "react-icons/all";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import HorizontalScroll from "react-horizontal-scrolling";
+import Card from "../components/Cards";
+
 export default function Booking() {
+  const getItems = () =>
+    Array(20)
+      .fill(0)
+      .map((_, ind) => ({ id: `element-${ind}` }));
+  const [items, setItems] = React.useState(getItems);
+  const [selected, setSelected] = React.useState([]);
+  const [position, setPosition] = React.useState(0);
+
+  const isItemSelected = ({ id }: { id: any }) => {
+    return !!selected.find((el) => el === id);
+  };
+
+  const handleClick = ({ id }: { id: any }) => {
+    return () => {
+      const itemSelected = isItemSelected({ id: id });
+
+      setSelected((currentSelected) =>
+        itemSelected
+          ? currentSelected.filter((el) => el !== id)
+          : currentSelected.concat(id)
+      );
+    };
+  };
+
   Moment.locale("en");
 
   const elResplandor = data.data.filter(
@@ -132,86 +159,18 @@ export default function Booking() {
         )}
       </Center>
 
-      {local == "colegiales" &&
-        listasCOLEGIALES.map((sala) => (
-          <Grid
-            ml={5}
-            mr={5}
-            mb={10}
-            templateAreas={`"nav main"`}
-            gridTemplateRows={"50px 1fr"}
-            gridTemplateColumns={"150px 1fr"}
-            h="200px"
-            gap="1"
-            color="blackAlpha.700"
-            fontWeight="bold"
-          >
-            <GridItem pl="2" area={"nav"}>
-              <Image
-                maxH="200px"
-                mr={10}
-                src={"juegos/" + find(sala.at(0)!.productId)!.img}
-              />
-            </GridItem>
-            <GridItem pl="2" area={"main"}>
-              <Carousel cols={6} rows={1} gap={1} loop>
-                {sala.map((slot) => (
-                  <Carousel.Item>
-                    {slot.numSeatsAvailable > 0 && (
-                      <Center
-                        h="200px"
-                        borderRadius={"5px"}
-                        ml={"10px"}
-                        color="white"
-                        bg={"#BDE7BD"}
-                      >
-                        <VStack
-                          divider={<StackDivider borderColor="black" />}
-                          spacing={2}
-                          align="stretch"
-                        >
-                          <Box h="25px">
-                            <Text color="black">
-                              {Moment(slot.startTime).format("HH:mm")}
-                            </Text>
-                          </Box>
-                          <Box h="40px">
-                            <Text color="black"> DISPONIBLE </Text>
-                          </Box>
-                        </VStack>
-                      </Center>
-                    )}
-
-                    {slot.numSeatsAvailable == 0 && (
-                      <Center
-                        h="200px"
-                        borderRadius={"5px"}
-                        ml={"10px"}
-                        color="white"
-                        bg={"#FFB6B3"}
-                      >
-                        <VStack
-                          divider={<StackDivider borderColor="black" />}
-                          spacing={2}
-                          align="stretch"
-                        >
-                          <Box h="25px">
-                            <Text color="black">
-                              {Moment(slot.startTime).format("HH:mm")}
-                            </Text>
-                          </Box>
-                          <Box h="40px">
-                            <Text color="black"> OCUPADO </Text>
-                          </Box>
-                        </VStack>
-                      </Center>
-                    )}
-                  </Carousel.Item>
-                ))}
-              </Carousel>
-            </GridItem>
-          </Grid>
+      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
+        {items.map(({ id }) => (
+          <Card
+            itemId={id} // NOTE: itemId is required for track items
+            title={id}
+            key={id}
+            onClick={handleClick({ id: id })}
+            selected={isItemSelected({ id: id })}
+          />
         ))}
+      </ScrollMenu>
+
       {local == "palermo" &&
         listasPALERMO.map((sala) => (
           <Grid
@@ -293,5 +252,56 @@ export default function Booking() {
           </Grid>
         ))}
     </LandingLayout>
+  );
+}
+
+function LeftArrow() {
+  const { isFirstItemVisible, scrollPrev } =
+    React.useContext(VisibilityContext);
+
+  return (
+    <Arrow disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
+      Left
+    </Arrow>
+  );
+}
+
+function RightArrow() {
+  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
+
+  return (
+    <Arrow disabled={isLastItemVisible} onClick={() => scrollNext()}>
+      Right
+    </Arrow>
+  );
+}
+function Arrow({
+  children,
+  disabled,
+  onClick,
+  className,
+}: {
+  children: React.ReactNode;
+  disabled: boolean;
+  onClick: VoidFunction;
+  className?: String;
+}) {
+  return (
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={"arrow" + `-${className}`}
+      style={{
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        right: "1%",
+        opacity: disabled ? "0" : "1",
+        userSelect: "none",
+      }}
+    >
+      {children}
+    </button>
   );
 }
