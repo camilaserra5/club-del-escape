@@ -17,40 +17,14 @@ import {
 } from "@chakra-ui/react";
 // @ts-ignore
 import Carousel from "react-grid-carousel";
-import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
+import Test from "../components/Carousel";
 import Moment from "moment";
 import data from "../data/slots.json";
 import holi from "../data/data.json";
 import { AiFillStar, IoMdInformationCircleOutline } from "react-icons/all";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import HorizontalScroll from "react-horizontal-scrolling";
-import Card from "../components/Cards";
-
 export default function Booking() {
-  const getItems = () =>
-    Array(20)
-      .fill(0)
-      .map((_, ind) => ({ id: `element-${ind}` }));
-  const [items, setItems] = React.useState(getItems);
-  const [selected, setSelected] = React.useState([]);
-  const [position, setPosition] = React.useState(0);
-
-  const isItemSelected = ({ id }: { id: any }) => {
-    return !!selected.find((el) => el === id);
-  };
-
-  const handleClick = ({ id }: { id: any }) => {
-    return () => {
-      const itemSelected = isItemSelected({ id: id });
-
-      setSelected((currentSelected) =>
-        itemSelected
-          ? currentSelected.filter((el) => el !== id)
-          : currentSelected.concat(id)
-      );
-    };
-  };
-
   Moment.locale("en");
 
   const elResplandor = data.data.filter(
@@ -159,17 +133,26 @@ export default function Booking() {
         )}
       </Center>
 
-      <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-        {items.map(({ id }) => (
-          <Card
-            itemId={id} // NOTE: itemId is required for track items
-            title={id}
-            key={id}
-            onClick={handleClick({ id: id })}
-            selected={isItemSelected({ id: id })}
-          />
+      {local == "colegiales" &&
+        listasCOLEGIALES.map((sala) => (
+          <Grid
+            h="200px"
+            templateRows="repeat(1, 1fr)"
+            templateColumns="repeat(7, 1fr)"
+            gap={4}
+          >
+            <GridItem colSpan={1}>
+              <Image
+                maxH="200px"
+                mr={10}
+                src={"juegos/" + find(sala.at(0)!.productId)!.img}
+              />
+            </GridItem>
+            <GridItem colSpan={6}>
+              <Test></Test>
+            </GridItem>
+          </Grid>
         ))}
-      </ScrollMenu>
 
       {local == "palermo" &&
         listasPALERMO.map((sala) => (
@@ -252,56 +235,5 @@ export default function Booking() {
           </Grid>
         ))}
     </LandingLayout>
-  );
-}
-
-function LeftArrow() {
-  const { isFirstItemVisible, scrollPrev } =
-    React.useContext(VisibilityContext);
-
-  return (
-    <Arrow disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
-      Left
-    </Arrow>
-  );
-}
-
-function RightArrow() {
-  const { isLastItemVisible, scrollNext } = React.useContext(VisibilityContext);
-
-  return (
-    <Arrow disabled={isLastItemVisible} onClick={() => scrollNext()}>
-      Right
-    </Arrow>
-  );
-}
-function Arrow({
-  children,
-  disabled,
-  onClick,
-  className,
-}: {
-  children: React.ReactNode;
-  disabled: boolean;
-  onClick: VoidFunction;
-  className?: String;
-}) {
-  return (
-    <button
-      disabled={disabled}
-      onClick={onClick}
-      className={"arrow" + `-${className}`}
-      style={{
-        cursor: "pointer",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        right: "1%",
-        opacity: disabled ? "0" : "1",
-        userSelect: "none",
-      }}
-    >
-      {children}
-    </button>
   );
 }

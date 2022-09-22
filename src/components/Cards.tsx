@@ -29,7 +29,7 @@ export default function Card({
       </div>
       <div
         style={{
-          height: "200px",
+          height: "100px",
         }}
       />
     </div>
