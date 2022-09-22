@@ -2,8 +2,22 @@ import React, { useState } from "react";
 
 import { ScrollMenu, VisibilityContext } from "react-horizontal-scrolling-menu";
 import Card from "../components/Cards";
+import {
+  AiFillCaretLeft,
+  AiOutlineDoubleLeft,
+  AiOutlineDoubleRight,
+} from "react-icons/all";
 
-export default function Test() {
+type Sala = {
+  productId: string;
+  eventId: string;
+  startTime: string;
+  endTime: string;
+  numSeatsAvailable: number;
+  privateEvent: boolean;
+};
+
+export default function Test({ sala }: { sala: Array<Sala> }) {
   const getItems = () =>
     Array(20)
       .fill(0)
@@ -30,13 +44,14 @@ export default function Test() {
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {items.map(({ id }) => (
+      {sala.map(({ eventId, startTime, numSeatsAvailable }) => (
         <Card
-          itemId={id} // NOTE: itemId is required for track items
-          title={id}
-          key={id}
-          onClick={handleClick({ id: id })}
-          selected={isItemSelected({ id: id })}
+          itemId={eventId} // NOTE: itemId is required for track items
+          title={startTime}
+          numSeatsAvailable={numSeatsAvailable}
+          key={eventId}
+          onClick={handleClick({ id: eventId })}
+          selected={isItemSelected({ id: eventId })}
         />
       ))}
     </ScrollMenu>
@@ -49,7 +64,7 @@ function LeftArrow() {
 
   return (
     <Arrow disabled={isFirstItemVisible} onClick={() => scrollPrev()}>
-      Left
+      <AiOutlineDoubleLeft />
     </Arrow>
   );
 }
@@ -59,7 +74,7 @@ function RightArrow() {
 
   return (
     <Arrow disabled={isLastItemVisible} onClick={() => scrollNext()}>
-      Right
+      <AiOutlineDoubleRight />
     </Arrow>
   );
 }
@@ -80,6 +95,7 @@ function Arrow({
       onClick={onClick}
       className={"arrow" + `-${className}`}
       style={{
+        backgroundColor: "gray",
         cursor: "pointer",
         display: "flex",
         flexDirection: "column",

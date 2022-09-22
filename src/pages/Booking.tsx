@@ -21,7 +21,11 @@ import Test from "../components/Carousel";
 import Moment from "moment";
 import data from "../data/slots.json";
 import holi from "../data/data.json";
-import { AiFillStar, IoMdInformationCircleOutline } from "react-icons/all";
+import {
+  AiFillRightCircle,
+  AiFillStar,
+  IoMdInformationCircleOutline,
+} from "react-icons/all";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 import HorizontalScroll from "react-horizontal-scrolling";
 export default function Booking() {
@@ -117,8 +121,9 @@ export default function Booking() {
             onClick={() => {
               setLocal("colegiales");
             }}
+            rightIcon={<AiFillRightCircle />}
           >
-            Ver colegiales
+            Reservar en colegiales
           </Button>
         )}
         {local == "colegiales" && (
@@ -127,8 +132,9 @@ export default function Booking() {
             onClick={() => {
               setLocal("palermo");
             }}
+            rightIcon={<AiFillRightCircle />}
           >
-            Ver palermo
+            Reservar en palermo
           </Button>
         )}
       </Center>
@@ -136,20 +142,22 @@ export default function Booking() {
       {local == "colegiales" &&
         listasCOLEGIALES.map((sala) => (
           <Grid
-            h="200px"
+            h="160px"
             templateRows="repeat(1, 1fr)"
-            templateColumns="repeat(7, 1fr)"
+            templateColumns="repeat(11, 1fr)"
             gap={4}
+            ml={5}
+            mb={10}
           >
             <GridItem colSpan={1}>
               <Image
-                maxH="200px"
+                maxH="160px"
                 mr={10}
                 src={"juegos/" + find(sala.at(0)!.productId)!.img}
               />
             </GridItem>
-            <GridItem colSpan={6}>
-              <Test></Test>
+            <GridItem colSpan={10}>
+              <Test sala={sala}></Test>
             </GridItem>
           </Grid>
         ))}
@@ -157,80 +165,22 @@ export default function Booking() {
       {local == "palermo" &&
         listasPALERMO.map((sala) => (
           <Grid
+            h="160px"
+            templateRows="repeat(1, 1fr)"
+            templateColumns="repeat(11, 1fr)"
+            gap={4}
             ml={5}
-            mr={5}
             mb={10}
-            templateAreas={`"nav main"`}
-            gridTemplateRows={"50px 1fr"}
-            gridTemplateColumns={"150px 1fr"}
-            h="200px"
-            gap="1"
-            color="blackAlpha.700"
-            fontWeight="bold"
           >
-            <GridItem pl="2" area={"nav"}>
+            <GridItem colSpan={1}>
               <Image
-                maxH="200px"
+                maxH="160px"
                 mr={10}
                 src={"juegos/" + find(sala.at(0)!.productId)!.img}
               />
             </GridItem>
-            <GridItem pl="2" area={"main"}>
-              <Carousel cols={6} rows={1} gap={1} loop>
-                {sala.map((slot) => (
-                  <Carousel.Item>
-                    {slot.numSeatsAvailable > 0 && (
-                      <Center
-                        h="200px"
-                        color="white"
-                        bg={"#BDE7BD"}
-                        borderRadius={"5px"}
-                        ml={"10px"}
-                      >
-                        <VStack
-                          divider={<StackDivider borderColor="black" />}
-                          spacing={2}
-                          align="stretch"
-                        >
-                          <Box h="25px">
-                            <Text color="black">
-                              {Moment(slot.startTime).format("HH:mm")}
-                            </Text>
-                          </Box>
-                          <Box h="40px">
-                            <Text color="black"> DISPONIBLE </Text>
-                          </Box>
-                        </VStack>
-                      </Center>
-                    )}
-
-                    {slot.numSeatsAvailable == 0 && (
-                      <Center
-                        borderRadius={"5px"}
-                        ml={"10px"}
-                        h="200px"
-                        color="white"
-                        bg={"#FFB6B3"}
-                      >
-                        <VStack
-                          divider={<StackDivider borderColor="black" />}
-                          spacing={2}
-                          align="stretch"
-                        >
-                          <Box h="25px">
-                            <Text color="black">
-                              {Moment(slot.startTime).format("HH:mm")}
-                            </Text>
-                          </Box>
-                          <Box h="40px">
-                            <Text color="black"> OCUPADO </Text>
-                          </Box>
-                        </VStack>
-                      </Center>
-                    )}
-                  </Carousel.Item>
-                ))}
-              </Carousel>
+            <GridItem colSpan={10}>
+              <Test sala={sala}></Test>
             </GridItem>
           </Grid>
         ))}
