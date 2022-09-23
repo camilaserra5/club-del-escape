@@ -10,6 +10,7 @@ import {
 
 type Sala = {
   productId: string;
+
   eventId: string;
   startTime: string;
   endTime: string;
@@ -17,7 +18,13 @@ type Sala = {
   privateEvent: boolean;
 };
 
-export default function Test({ sala }: { sala: Array<Sala> }) {
+export default function Test({
+  sala,
+  venue,
+}: {
+  sala: Array<Sala>;
+  venue: string;
+}) {
   const getItems = () =>
     Array(20)
       .fill(0)
@@ -44,10 +51,12 @@ export default function Test({ sala }: { sala: Array<Sala> }) {
 
   return (
     <ScrollMenu LeftArrow={LeftArrow} RightArrow={RightArrow}>
-      {sala.map(({ eventId, startTime, numSeatsAvailable }) => (
+      {sala.map(({ eventId, startTime, numSeatsAvailable, productId }) => (
         <Card
           itemId={eventId} // NOTE: itemId is required for track items
-          title={startTime}
+          startTime={startTime}
+          title={productId}
+          venue={venue}
           numSeatsAvailable={numSeatsAvailable}
           key={eventId}
           onClick={handleClick({ id: eventId })}

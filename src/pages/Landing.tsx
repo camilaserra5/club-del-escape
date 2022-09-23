@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import LandingLayout from "../components/LandingLayout";
 import Hero from "../components/Hero";
 import { Text } from "@chakra-ui/react";
