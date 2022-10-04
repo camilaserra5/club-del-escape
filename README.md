@@ -1,5 +1,5 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+## Club del escape (front)
+Webpage developed for an escape room booking site. Demo at https://club-del-escape-ktp9.vercel.app/
 
 ## Available Scripts
 
